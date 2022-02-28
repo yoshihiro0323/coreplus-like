@@ -1,2 +1,27 @@
+%%
+%% This is file `coreplus.sty',
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{coreplus}[2022/02/28 1.00]
+\usepackage[deluxe]{otf}
+\usepackage{color}
+\usepackage{tikz}
+
+\usetikzlibrary{calc}
+
+\newcounter{answer}
+
+\newcommand{\answer}[1]{\!
+  \begin{tikzpicture}[baseline=(num.base),font=\sffamily\small]
+   \node[draw=black, rectangle, rounded corners=2pt,
+          text=black,
+          line width=.5pt, inner sep=2pt, outer sep=0pt
+          ] (num){\addtocounter{answer}{1}\arabic{answer}};
+   \node [right, inner sep=1pt, outer sep=0pt] (text) at (num.east){#1};
+   \draw [line width=.5pt, outer sep=0pt] (num.south)--($(text.base east)-(num.base west)+(num.south)+(-4pt,0)$);
+  \end{tikzpicture}%
+}
+
+\newcommand{\hl}[1]{\answer{\textcolor{red}{#1}}}
+
+%%
+%% End of file `coreplus.sty'.
