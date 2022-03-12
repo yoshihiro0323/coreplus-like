@@ -50,8 +50,8 @@
 \newdimen\fn@width%\fn@widthという変数（型は長さ）を定義
 \let\fn@colwidth\columnwidth%\fn@colwidthという変数に横幅ピッタリを代入
 \newif\if@savingnotes%\if@savingnotesという変数（型はboolean）を定義
-\def\fn@startnote{%\fn@startnoteを定義
-  \hsize\fn@colwidth%
+\def\fn@startnote{%\fn@startnoteを定義 footnoteの開始？
+  \hsize\fn@colwidth%\hsize（最大横幅）の\fn@colwidth倍？
   \interlinepenalty\interfootnotelinepenalty%
   \reset@font\footnotesize%
   \floatingpenalty\@MM% Is this right???
