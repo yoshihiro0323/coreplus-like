@@ -88,39 +88,21 @@
 %
 % \section{User guide}
 %
-% This package provides some commands for handling footnotes slightly
-% better than \LaTeX\ usually does; there are several commands and
-% environments (notably |\parbox|, \env{minipage} and \env{tabular}
-% \begin{footnote}
-%   The \package{mdwtab} package, provided in this distribution, handles
-%   footnotes correctly anyway; it uses an internal version of this package
-%   to do so.
-% \end{footnote})
-% which `trap' footnotes so that they can't escape and appear at the bottom
-% of the page.
+% このパッケージは、LATEXが通常行うよりもわずかに優れた脚注を処理するためのいくつかのコマンドを提供します。いくつかのコマンドと環境(特に\parbox、minipage、表形式1)があり、脚注を「トラップ」してページの下部にエスケープして表示できません。
 %
 % \DescribeEnv{savenotes}
-% The \env{savenotes} environment saves up any footnotes encountered within
-% it, and performs them all at the end.
+% Savenotes環境は、その中で遭遇した脚注を保存し、最後にすべてを実行します。
 %
 % \DescribeMacro{\savenotes}
+% コマンドまたは環境を定義する場合は、\savenotesを使用できます。
 % \DescribeMacro{\spewnotes}
-% If you're defining a command or environment, you can use the |\savenotes|
-% command to start saving up footnotes, and the |\spewnotes| command to
-% execute them all at the end.  Note that |\savenotes| and |\spewnotes|
-% enclose a group, so watch out.  You can safely nest the commands and
-% environments -- they work out if they're already working and behave
-% appropriately.
+% コマンドを使用して脚注の保存を開始し、最後にすべてを実行する\spewnotesコマンドを実行します。\Savenotesと\spewnotesはグループを囲むので注意してください。コマンドと環境を安全にネストできます。すでに動作していて、適切に動作している場合に機能します。
 %
 % \DescribeEnv{minipage*}
-% To help things along a bit, the package provides a $*$-version of the
-% \env{minipage} environment, which doesn't trap footnotes for itself (and
-% in fact sends any footnotes it contains to the bottom of the page, where
-% they belong).
+% 少しの間、パッケージはミニページのen-vironmentの\UTF{2217}バージョンを提供し、脚注自体をトラップしません(実際には、含まれている脚注をページの下部に送信します)。
 %
 % \DescribeMacro{\makesavenoteenv}
-% The new \env{minipage$*$} environment was created with a magic command
-% called |\makesavenoteenv|.  It has a fairly simple syntax:
+% 新しいミニページ\UTF{2217}環境は、\makesavenoteenvという魔法のコマンドで作成されました。それはかなり単純な構文を持っています:
 %
 % \begin{grammar}
 % <make-save-note-env-cmd> ::= \[[
@@ -130,56 +112,26 @@
 % \]]
 % \end{grammar}
 %
-% Without the optional argument, it redefines the named environment so that
-% it handles footnotes correctly.  With the optional argument, it makes
-% the new environment named by \<new-env-name> into a footnote-friendly
-% version of the \<env-name> environment.
+% オプションの引数がなければ、脚注を正しく処理するように名前付き環境を再定義します。オプションの引数を使用すると、new-env-nameという名前の新しい環境を脚注に優しいバージョンの環境にします。
 %
 % \DescribeMacro{\parbox}
-% The package also redefines the |\parbox| command so that it works properly
+% パッケージはまた、脚注で適切に動作するように\parboxコマンドを再定義します。
 % with footnotes.
 %
 % \DescribeEnv{footnote}
-% The other problem which people tend to experience with footnotes is that
-% you can't put verbatim text (with the |\verb| comamnd or the \env{verbatim}
-% environment) into the |\footnote| command's argument.  This package
-% provides a \env{footnote} \emph{environment}, which \emph{does} allow
-% verbatim things.  You use the environment just like you do the command.
-% It's really easy.  It even has an optional argument, which works the same
-% way.
+% 脚注で人々が経験する傾向があるもう1つの問題は、\footnoteコマンドの引数に逐語的なテキスト(\動詞コマンドまたは逐語的な環境)を入れることができないことです。このパッケージは、逐語的なことを可能にする脚注en-vironmentを提供します。コマンドと同じように環境を使用します。それは本当に簡単です。同じように機能するオプションの引数もあります。
 %
 % \DescribeEnv{footnotetext}
-% To go with the \env{footnote} environment, there's a \env{footnotetext}
-% environment, which just puts the text in the bottom of the page, like
-% |\footnotetext| does.
-%
-% There's a snag with these environments, though.  Some other nonstandard
-% environments, like \env{tabularx}, try to handle footnotes their own
-% way, because they won't work otherwise.  The way they do this is not
-% compatible with the way that the \env{footnote} and \env{footnotetext}
-% environments work, and you will get strange results if you try (there'll
-% be odd vertical spacing, and the footnote text may well be incorrect).
-% \begin{footnote}
-%   The solution to this problem is to send mail to David Carlisle persuading
-%   him to use this package to handle footnotes, rather than doing it his
-%   way.
+% 脚注環境に行くには、\footnotetextのようにページの下部にテキストを配置する脚注テキスト環境があります。
+% しかし、これらの環境にはスナッグがあります。Tabularxのような他のいくつかの非標準環境は、そうでなければ動作しないため、脚注を独自の方法で処理しようとします。これを行う方法は、脚注および脚注テキスト環境の動作方法と互換性がなく、試してみると奇妙な結果が得られます(奇妙な垂直間隔があり、脚注テキストが正しくない可能性があります)。
 % \end{footnote}
 %
 % \implementation
 %
 % \section{Implementation}
 %
-% Most implementations of footnote-saving (in particular, that used in
-% the \package{tabularx} and \package{longtable} packages) use a token
-% list register to store the footnote text, and then expand it when whatever
-% was preventing footnotes (usually a vbox) stops.  This is no good at all
-% if the footnotes contain things which might not be there by the time the
-% expansion occurs.  For example, references to things in temporary boxes
-% won't work.
-%
-% This implementation therefore stores the footnotes up in a box register.
-% This must be just as valid as using tokens, because all I'm going to do
-% at the end is unbox the box).
+% 脚注保存のほとんどの実装(特に、tabularxおよびlongtableパッケージで使用される)は、トークンリストレジスタを使用して脚注テキストを保存し、脚注(通常はvbox)が停止するのを妨げていたときに展開します。脚注に展開が発生するまでに存在しない可能性のあるものが含まれている場合、これはまったく良くありません。たとえば、一時ボックス内のものへの参照は機能しません。
+% したがって、この実装は脚注をボックスレジスタに保存します。最後に行うのはボックスを開梱することだけなので、これはトークンを使用するのと同じくらい有効でなければなりません)。
 %
 %    \begin{macrocode}
 %<*macro|package>
@@ -267,8 +219,8 @@
 %
 %    \begin{macrocode}
 \def\fn@fntext#1{%
-  \ifx\ifmeasuring@\@@undefined%
-    \expandafter\@secondoftwo\else\expandafter\@iden%
+  \ifx\ifmeasuring@\@@undefined%もし\ifmeasuring@が未定義だったら
+    \expandafter\@secondoftwo\else\expandafter\@iden%\@secondoftwo
   \fi%
   {\ifmeasuring@\expandafter\@gobble\else\expandafter\@iden\fi}%
   {%
