@@ -140,22 +140,20 @@
 \fi
 %    \end{macrocode}
 %
-% I'll need a length to tell me how wide the footnotes should be at the
-% moment.
+% 現時点での脚注の幅がどれくらいであるべきかの長さレジスタが必要
 %
 %    \begin{macrocode}
 \newdimen\fn@width
 %    \end{macrocode}
 %
-% Of course, I can't set this up until I actually start saving footnotes.
-% Until then I'll use |\columnwidth| (which works in \package{multicol}
-% even though it doesn't have any right to).
+% もちろん、実際に脚注を保存し始めるまで、これを設定することはできません。それまで
+% \Columnwidthを使用します(権利はありませんが、マルチコールで動作します)。
 %
 %    \begin{macrocode}
 \let\fn@colwidth\columnwidth
 %    \end{macrocode}
 %
-% And now a switch to remember if we're already handling footnotes,
+% そして今、脚注をすでに処理しているかどうかを覚えておくためのスイッチ、
 %
 %    \begin{macrocode}
 \newif\if@savingnotes
@@ -164,13 +162,11 @@
 %
 % \subsection{Building footnote text}
 %
-% I need to emulate \LaTeX's footnote handling when I'm putting the notes
-% into my box; this is also useful in the verbatim-in-footnotes stuff.
+% メモをボックスに入れるときに、LATEXの脚注処理をエミュレートする必要があります。これは、脚注の逐語的なものにも役立ちます。
 %
 % \begin{macro}{\fn@startnote}
 %
-% Here's how a footnote gets started.  Most of the code here is stolen
-% from |\@footnotetext|.
+% 脚注の開始方法は次のとおりです。ここのコードのほとんどは\@footnotetextから盗まれています。
 %
 %    \begin{macrocode}
 \def\fn@startnote{%
@@ -188,7 +184,7 @@
 %
 % \begin{macro}{\fn@endnote}
 %
-% Footnotes are finished off by this macro.  This is the easy bit.
+% 脚注はこのマクロで終わります。これは簡単なビットです。
 %
 %    \begin{macrocode}
 \let\fn@endnote\color@endgroup
